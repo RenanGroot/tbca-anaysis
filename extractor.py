@@ -17,7 +17,7 @@ def check_next_page(
         bool: True(if there is next page link); False(if there isn't next page link)
     """
 
-    if ' class="nav-link">próxima' in html:
+    if " class='nav-link'>pr&oacute;xima" in html:
         return True
     else:
         return False
@@ -37,7 +37,7 @@ def extract_table(
 
     response = requests.get(target_url)
     response_html = response.text
-
+    print(response_html)
     print(check_next_page(response_html))
 
     # Taking table
