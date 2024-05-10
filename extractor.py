@@ -10,6 +10,8 @@ def check_next_page(
         html:str
 ) -> bool:
     """
+    Checks if there is a next page link, returning a bool value.
+
     Args: 
         html(str): page's html
     
@@ -21,6 +23,7 @@ def check_next_page(
         return True
     else:
         return False
+
 
 def extract_table(
         target_url:str
@@ -37,14 +40,21 @@ def extract_table(
 
     response = requests.get(target_url)
     response_html = response.text
-    print(response_html)
-    print(check_next_page(response_html))
-
+    check_next_page(response_html)
     # Taking table
     tables_html = pd.read_html(response_html)
     df = tables_html[0]
     return df
 
 
-dtframe = extract_table("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
-print(dtframe)
+#dtframe = extract_table("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
+#print(dtframe)
+
+
+if __name__ == "__main__":
+    page = requests.get("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
+    i = 1
+    while check_next_page(page) == False:
+        page = requests.get(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
+        i += 1
+        print(page)
