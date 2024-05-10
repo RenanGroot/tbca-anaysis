@@ -27,7 +27,7 @@ def check_next_page(
 
 def extract_table(
         target_url:str
-) -> pd.DataFrame():
+) -> pd.DataFrame:
     """
     Extract the table contained in the html given the target page's url.
 
@@ -55,6 +55,7 @@ if __name__ == "__main__":
     page = requests.get("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
     i = 1
     while check_next_page(page) == False:
-        page = requests.get(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
+        df = extract_table(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
+        df.to_csv(f"landing_files/food_page{str(i)}.csv")
         i += 1
-        print(page)
+        print(i)
