@@ -54,7 +54,9 @@ def extract_table(
 if __name__ == "__main__":
     page = requests.get("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
     i = 1
-    while check_next_page(page) == False:
+    #TODO
+    # Need to fix, it is not stoping the loop
+    #while check_next_page(page) == False:
         df = extract_table(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
         df.to_csv(f"landing_files/food_page{str(i)}.csv")
         i += 1
