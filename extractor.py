@@ -6,25 +6,6 @@ import requests
 import pandas as pd
 
 
-def check_next_page(
-        html:str
-) -> bool:
-    """
-    Checks if there is a next page link, returning a bool value.
-
-    Args: 
-        html(str): page's html
-    
-    Returns:
-        bool: True(if there is next page link); False(if there isn't next page link)
-    """
-
-    if " class='nav-link'>pr&oacute;xima" in html:
-        return True
-    else:
-        return False
-
-
 def extract_table(
         target_url:str
 ) -> pd.DataFrame:
@@ -40,7 +21,6 @@ def extract_table(
 
     response = requests.get(target_url)
     response_html = response.text
-    check_next_page(response_html)
     # Taking table
     tables_html = pd.read_html(response_html)
     df = tables_html[0]
@@ -56,7 +36,8 @@ if __name__ == "__main__":
     i = 1
     #TODO
     # Need to fix, it is not stoping the loop
-    #while check_next_page(page) == False:
+    # Create a new condition which looks for how much data is in the data frame
+    while check_next_page(page) == False:
         df = extract_table(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
         df.to_csv(f"landing_files/food_page{str(i)}.csv")
         i += 1
