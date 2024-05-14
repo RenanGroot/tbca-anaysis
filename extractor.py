@@ -27,18 +27,25 @@ def extract_table(
     return df
 
 
-#dtframe = extract_table("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
-#print(dtframe)
+def source_to_landing_foods():
+    """
+    Extract all foods' tables, saving it into csv files in the "landing_files/food_table" folder.
+    """
+    i = 1
+    is_empty = False
 
+    # Loop though all the pages
+    while is_empty == False:
+        df = extract_table(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
+
+        # Condition if table there is no row, stop the looping
+        if df.shape[0] < 1:
+            is_empty = True
+            continue
+        df.to_csv(f"landing_files/food_table/food_page{str(i)}.csv")
+        i += 1
+
+        print("Successfuly extracted food tables")
 
 if __name__ == "__main__":
-    page = requests.get("https://www.tbca.net.br/base-dados/composicao_estatistica.php")
-    i = 1
-    #TODO
-    # Need to fix, it is not stoping the loop
-    # Create a new condition which looks for how much data is in the data frame
-    while check_next_page(page) == False:
-        df = extract_table(f"https://www.tbca.net.br/base-dados/composicao_estatistica.php?pagina={str(i)}")
-        df.to_csv(f"landing_files/food_page{str(i)}.csv")
-        i += 1
-        print(i)
+    source_to_landing_foods()
