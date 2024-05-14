@@ -2,6 +2,7 @@
 # THis function is going to extract the data from the site to the sql database
 # https://www.tbca.net.br/index.html
 
+import os
 import requests
 import pandas as pd
 
@@ -47,5 +48,17 @@ def source_to_landing_foods():
 
         print("Successfuly extracted food tables")
 
+def source_to_landing_details():
+    """
+    Extract all foods' details tables, saving it into csv files in the "landing_files/details" folder.
+    """
+
+    directory = os.fsencode("landing_files/food_table")
+        
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        print(filename)
+
 if __name__ == "__main__":
-    source_to_landing_foods()
+    #source_to_landing_foods()
+    source_to_landing_details()
