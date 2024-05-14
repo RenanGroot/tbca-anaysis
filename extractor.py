@@ -74,8 +74,10 @@ def source_to_landing_details():
     """
     Extract all foods' details tables, saving it into csv files in the "landing_files/details" folder.
     """
-    for item in list_files("landing_files/food_table"):
-        print(item)
+    files = list_files("landing_files/food_table")
+    for file in files:
+        temp_df = pd.read_csv(file)
+        food_list = temp_df["Código"].to_list()
     
 
 if __name__ == "__main__":
