@@ -6,6 +6,28 @@ import os
 import requests
 import pandas as pd
 
+def list_files(
+        path:str
+)-> list:
+    """
+    Lists the files from a folder.
+
+    Args:
+        path(str): Folder's path.
+
+    Returns:
+        list: List with the files paths.
+    """
+
+    files = []
+    directory = os.fsencode(path)
+
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        files.append(path + "/" + filename)
+
+    return files
+
 
 def extract_table(
         target_url:str
@@ -52,12 +74,9 @@ def source_to_landing_details():
     """
     Extract all foods' details tables, saving it into csv files in the "landing_files/details" folder.
     """
-
-    directory = os.fsencode("landing_files/food_table")
-        
-    for file in os.listdir(directory):
-        filename = os.fsdecode(file)
-        print(filename)
+    for item in list_files("landing_files/food_table"):
+        print(item)
+    
 
 if __name__ == "__main__":
     #source_to_landing_foods()
