@@ -78,7 +78,11 @@ def source_to_landing_details():
     for file in files:
         temp_df = pd.read_csv(file)
         food_list = temp_df["Código"].to_list()
+        for food in food_list:
+            df_details = extract_table(f"https://www.tbca.net.br/base-dados/int_composicao_estatistica.php?cod_produto={food}")
+            df_details.to_csv(f"landing_files/details/product_{food}.csv")
     
+    print("Successfully extracted food details")
 
 if __name__ == "__main__":
     #source_to_landing_foods()
