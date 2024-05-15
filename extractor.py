@@ -79,8 +79,12 @@ def source_to_landing_details():
         temp_df = pd.read_csv(file)
         food_list = temp_df["Código"].to_list()
         for food in food_list:
-            df_details = extract_table(f"https://www.tbca.net.br/base-dados/int_composicao_estatistica.php?cod_produto={food}")
-            df_details.to_csv(f"landing_files/details/product_{food}.csv")
+            already_downloaded = list_files("landing_files/details")
+            if f"landing_files/details/product_{food}.csv" in already_downloaded:
+                pass
+            else:
+                df_details = extract_table(f"https://www.tbca.net.br/base-dados/int_composicao_estatistica.php?cod_produto={food}")
+                df_details.to_csv(f"landing_files/details/product_{food}.csv")
     
     print("Successfully extracted food details")
 
