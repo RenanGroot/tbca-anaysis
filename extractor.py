@@ -61,7 +61,7 @@ def source_to_landing_foods():
         if df.shape[0] < 1:
             is_empty = True
             continue
-        df.to_csv(f"landing_files/food_table/food_page{str(i)}.csv")
+        df.to_csv(f"landing_files/food_table/food_page{str(i)}.csv",index=False)
         i += 1
 
         print("Successfuly extracted food tables")
@@ -80,7 +80,7 @@ def source_to_landing_details():
                 pass
             else:
                 df_details = extract_table(f"https://www.tbca.net.br/base-dados/int_composicao_estatistica.php?cod_produto={food}")
-                df_details.to_csv(f"landing_files/details/product_{food}.csv")
+                df_details.to_csv(f"landing_files/details/product_{food}.csv",index=False)
     
     print("Successfully extracted food details")
 
