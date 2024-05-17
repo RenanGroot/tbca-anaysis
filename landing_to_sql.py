@@ -20,11 +20,16 @@ def create_database():
         brand TEXT );
 
     CREATE TABLE IF NOT EXISTS food_details (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        scientific_name TEXT,
-        group TEXT,
-        brand TEXT );
+        id TEXT FOREIGN KEY,
+        component TEXT,
+        unit TEXT,
+        unit_per_100g INTEGER,
+        standard_deviation INTEGER,
+        min INTEGER,
+        max INTEGER,
+        num_data_used INTEGER,
+        references TEXT,
+        data_type TEXT);
     """
     )
     connection.commit()
