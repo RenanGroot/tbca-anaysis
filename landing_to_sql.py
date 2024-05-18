@@ -36,12 +36,16 @@ def create_database():
 
 
 
-def upload_csv(csv_path:str) -> None:
+def upload_csv(
+        csv_path:str,
+        sql_database:str
+        ) -> None:
     """
     This function creates the database (if not exists), and populate it with a csv file.
 
     Args:
         csv_path (str): Csv file path. Ex: "landing_files/food_table/food_page1.csv"
+        sql_database(str): Target SQL database, which the csv data will be uploaded. Ex:"database/foods.db"
   
     """
     
