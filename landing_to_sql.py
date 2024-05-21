@@ -4,6 +4,9 @@ import subprocess
 def create_database():
     """
     Creates the database (if not exists), inside folder `database/`.
+    Tables:
+            food_list
+            food_details
     """
     connection = sqlite3.connect("database/foods.db")
     
@@ -16,11 +19,11 @@ def create_database():
         id TEXT PRIMARY KEY,
         name TEXT,
         scientific_name TEXT,
-        group TEXT,
+        category TEXT,
         brand TEXT );
 
     CREATE TABLE IF NOT EXISTS food_details (
-        id TEXT FOREIGN KEY,
+        id TEXT FOREING KEY,
         component TEXT,
         unit TEXT,
         unit_per_100g INTEGER,
@@ -28,7 +31,7 @@ def create_database():
         min INTEGER,
         max INTEGER,
         num_data_used INTEGER,
-        references TEXT,
+        reference TEXT,
         data_type TEXT);
     """
     )
@@ -38,24 +41,26 @@ def create_database():
 
 def upload_csv(
         csv_path:str,
-        sql_database:str
+        sql_database:str,
+        table:str
         ) -> None:
     """
-    This function creates the database (if not exists), and populate it with a csv file.
+    This function populates a database with a csv file, using command-like operations in sqlite3.
 
     Args:
         csv_path (str): Csv file path. Ex: "landing_files/food_table/food_page1.csv"
         sql_database(str): Target SQL database, which the csv data will be uploaded. Ex:"database/foods.db"
+        table(str): Target table's name.
   
     """
     
     # Run subprocess for populating the DB with the csv file
     subprocess.run(['sqlite3',
-                         str("database/foods.db"),
+                         str(sql_database),
                          '-cmd',
                          '.mode csv',
                          '.import --skip 1 ' + csv_path
-                                 +' flights'],
+                                 +f' {table}'],
                         capture_output=True)
 
     print(f"Successfully populated db with data from : {csv_path}")
