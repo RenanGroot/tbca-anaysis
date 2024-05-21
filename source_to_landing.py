@@ -85,5 +85,5 @@ def source_to_landing_details():
     print("Successfully extracted food details")
 
 if __name__ == "__main__":
-    #source_to_landing_foods()
+    source_to_landing_foods()
     source_to_landing_details()
