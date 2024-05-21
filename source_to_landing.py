@@ -71,15 +71,21 @@ def source_to_landing_details():
     Extract all foods' details tables, saving it into csv files in the "landing_files/details" folder.
     """
     files = list_files("landing_files/food_table")
+    
+    # Loop the csv files
     for file in files:
         temp_df = pd.read_csv(file)
         food_list = temp_df["Código"].to_list()
+
+        # Loop the food ids from the csv
         for food in food_list:
+            # If already downloaded
             already_downloaded = list_files("landing_files/details")
             if f"landing_files/details/product_{food}.csv" in already_downloaded:
                 pass
             else:
                 df_details = extract_table(f"https://www.tbca.net.br/base-dados/int_composicao_estatistica.php?cod_produto={food}")
+                df_details["id"] = food
                 df_details.to_csv(f"landing_files/details/product_{food}.csv",index=False)
     
     print("Successfully extracted food details")
