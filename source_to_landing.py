@@ -83,7 +83,3 @@ def source_to_landing_details():
                 df_details.to_csv(f"landing_files/details/product_{food}.csv",index=False)
     
     print("Successfully extracted food details")
-
-if __name__ == "__main__":
-    source_to_landing_foods()
-    source_to_landing_details()
