@@ -23,7 +23,6 @@ def create_database():
         brand TEXT );
 
     CREATE TABLE IF NOT EXISTS food_details (
-        id TEXT FOREING KEY,
         component TEXT,
         unit TEXT,
         unit_per_100g INTEGER,
@@ -32,7 +31,8 @@ def create_database():
         max INTEGER,
         num_data_used INTEGER,
         reference TEXT,
-        data_type TEXT);
+        data_type TEXT,
+        id TEXT FOREING KEY);
     """
     )
     connection.commit()
